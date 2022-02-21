@@ -21,3 +21,16 @@
 .list code {
   background: #f7f7f7;
 }
+.cabody {
+  margin: auto;
+}
+.info {
+  
+  position: fixed;
+  right: 0.5rem;
+  top:4.5rem;
+  z-index: 1;
+}
+.btn{
+  width: 8rem;
+}
