@@ -1,4 +1,4 @@
-package com.anaple.pure_web_server.config;
+package com.ktserver.ktserver.config;
 
 import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.core.MybatisXMLLanguageDriver;

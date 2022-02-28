@@ -2,6 +2,7 @@ package com.ktserver.ktserver.api.login.userlogin
 
 import com.ktserver.ktserver.json.api.JsonLoginAccountApi
 import com.ktserver.ktserver.json.api.JsonUserLoginApi
+import com.ktserver.ktserver.service.UserTbService
 import org.springframework.beans.factory.annotation.Autowired
 
 import org.springframework.web.bind.annotation.PostMapping
@@ -17,16 +18,15 @@ import org.springframework.web.bind.annotation.RestController
  */
 @RestController
 class AntdUserLoginApi {
-
+    @Autowired
+    val userTbService: UserTbService? =null;
     @PostMapping("api/login/account")
-    fun account(@RequestBody JSON_LoginUser: JsonUserLoginApi): JsonLoginAccountApi? {
+    fun account(@RequestBody JSON_LoginUser: JsonUserLoginApi): Any? {
         return if (JSON_LoginUser.autoLogin == true) {
-
-            JsonLoginAccountApi(JSON_LoginUser.username, "ok", "admin", "account", "?", 200)
-
+            userTbService?.checkUserLogin(JSON_LoginUser!!.username!!,JSON_LoginUser.password!!,99999*60)
 
         } else {
-            JsonLoginAccountApi("error", "guest", "account")
+            userTbService?.checkUserLogin(JSON_LoginUser!!.username!!,JSON_LoginUser.password!!,9900*60)
         }
     }
 

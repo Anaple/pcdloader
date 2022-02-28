@@ -2,6 +2,10 @@ package com.ktserver.ktserver.api.login.currentuser
 
 import com.ktserver.ktserver.json.api.JsonCurrentUser
 import com.ktserver.ktserver.json.api.JsonCurrentUserBack
+import com.ktserver.ktserver.service.UserTbService
+import com.ktserver.ktserver.utils.ErrorUtils
+import com.ktserver.ktserver.utils.JwtUtils
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -15,12 +19,23 @@ import org.springframework.web.bind.annotation.RestController
  */
 @RestController
 class AntdCurrentUserApi {
+    @Autowired
+    val userTbService:UserTbService ? =null;
     @GetMapping("api/currentUser")
     fun currentUser(
             @RequestParam(value = "token", required = false) token: String?,
             @RequestParam(value = "username", required = false) username: String?,
-    ): JsonCurrentUserBack {
-        return JsonCurrentUserBack(true, JsonCurrentUser("Administrator", "https://avatars.githubusercontent.com/u/67675386?v=4", "?", "test", "admin"))
+    ): Any? {
+        return if (JwtUtils.verify(token)) {
+            if (token != null) {
+                userTbService?.checkUser(token)
+            }else{
+                ErrorUtils.errorCode(401, "请登录")
+            }
+
+        } else {
+            ErrorUtils.errorCode(401, "请登录")
+        }
 
 
     }

@@ -35,9 +35,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "api/login/account").permitAll() // 允许post请求/add-user，而无需认证
-                .antMatchers("api/**").authenticated()
-                .anyRequest().permitAll()// 所有请求都不需要验证
+
+                .antMatchers(HttpMethod.POST, "/api/login/account").permitAll() // 允许post请求，而无需认证
+                .antMatchers(HttpMethod.GET,"/api/currentUser").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/login/outLogin").permitAll()
+                .antMatchers("/api/table/**").authenticated()
+
+
+                .anyRequest().authenticated()// 所有请求都需要验证
+                .and()
+                .addFilterBefore(new JwtAuthenticationFilter() , UsernamePasswordAuthenticationFilter.class)
+                .cors()
                 .and()
                 .csrf().disable();// post请求要关闭csrf验证,不然访问报错；实际开发中开启，需要前端配合传递其他参数
     }

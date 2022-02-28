@@ -1,4 +1,4 @@
-package com.anaple.pure_web_server.config
+package com.ktserver.ktserver.config
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.EnableWebMvc

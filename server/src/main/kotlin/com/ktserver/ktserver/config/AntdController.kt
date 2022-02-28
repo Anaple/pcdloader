@@ -1,4 +1,4 @@
-package com.anaple.pure_web_server.config
+package com.ktserver.ktserver.config
 
 import org.springframework.boot.web.servlet.error.ErrorController
 import org.springframework.stereotype.Controller

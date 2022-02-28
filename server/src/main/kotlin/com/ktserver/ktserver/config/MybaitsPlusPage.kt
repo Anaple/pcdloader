@@ -1,4 +1,4 @@
-package com.anaple.pure_web_server.config
+package com.ktserver.ktserver.config
 
 import com.baomidou.mybatisplus.annotation.DbType
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor

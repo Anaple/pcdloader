@@ -36,6 +36,9 @@ const Login = () => {
 
     if (userInfo) {
       await setInitialState((s) => ({ ...s, currentUser: userInfo }));
+      
+      
+    
     }
   };
 
@@ -47,6 +50,10 @@ const Login = () => {
       if (msg.status === 'ok') {
         const defaultLoginSuccessMessage = '登录成功！';
         message.success(defaultLoginSuccessMessage);
+        console.log(msg)
+        console.log(msg.token)
+        var storage=window.localStorage;
+        storage["token"] = msg.token;
         await fetchUserInfo();
         /** 此方法会跳转到 redirect 参数所在的位置 */
 
@@ -56,9 +63,7 @@ const Login = () => {
         history.push(redirect || '/');
         return;
       }
-
       console.log(msg); // 如果失败去设置用户错误信息
-
       setUserLoginState(msg);
     } catch (error) {
       const defaultLoginFailureMessage = '登录失败，请重试！';
@@ -72,24 +77,19 @@ const Login = () => {
       <div className={styles.content}>
         <LoginForm
           logo={<img alt="logo" src="/logo.svg" />}
-          title="Ant Design"
-          subTitle={'Ant Design 是西湖区最具影响力的 Web 设计规范'}
+          title="Point Cloud Web"
+          subTitle={'点云系统登录'}
           initialValues={{
             autoLogin: true,
           }}
-          actions={[
-            '其他登录方式 :',
-            <AlipayCircleOutlined key="AlipayCircleOutlined" className={styles.icon} />,
-            <TaobaoCircleOutlined key="TaobaoCircleOutlined" className={styles.icon} />,
-            <WeiboCircleOutlined key="WeiboCircleOutlined" className={styles.icon} />,
-          ]}
+         
           onFinish={async (values) => {
             await handleSubmit(values);
           }}
         >
           <Tabs activeKey={type} onChange={setType}>
             <Tabs.TabPane key="account" tab={'账户密码登录'} />
-            <Tabs.TabPane key="mobile" tab={'手机号登录'} />
+           
           </Tabs>
 
           {status === 'error' && loginType === 'account' && (
@@ -103,7 +103,7 @@ const Login = () => {
                   size: 'large',
                   prefix: <UserOutlined className={styles.prefixIcon} />,
                 }}
-                placeholder={'用户名: admin or user'}
+                placeholder={'用户名:'}
                 rules={[
                   {
                     required: true,
@@ -117,7 +117,7 @@ const Login = () => {
                   size: 'large',
                   prefix: <LockOutlined className={styles.prefixIcon} />,
                 }}
-                placeholder={'密码: ant.design'}
+                placeholder={'密码:'}
                 rules={[
                   {
                     required: true,
