@@ -1,0 +1,16 @@
+# Thymeleaf Config
+spring:
+  thymeleaf:
+    prefix: classpath:dist/
+
+# DataSource MainConfig
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://39.105.181.51:3307/arcloud?
+    username: test1
+    password: passwdtest1
+
+# Logger MainConfig
+logging:
+  level:
+    com.anaple.pure_web_server: debug

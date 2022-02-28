@@ -1,4 +1,4 @@
-import { PlusOutlined } from '@ant-design/icons';
+import { UploadOutlined } from '@ant-design/icons';
 import { Button, message, Input, Drawer } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
@@ -100,59 +100,18 @@ const TableList = () => {
 
   const columns = [
     {
-      title: '规则名称',
+      title: '文件名称',
       dataIndex: 'name',
-      tip: 'The rule name is the unique key',
-      render: (dom, entity) => {
-        return (
-          <a
-            onClick={() => {
-              setCurrentRow(entity);
-              setShowDetail(true);
-            }}
-          >
-            {dom}
-          </a>
-        );
-      },
+      valueType:'textarea',
     },
     {
-      title: '描述',
+      title: '文件信息',
       dataIndex: 'desc',
       valueType: 'textarea',
     },
+    
     {
-      title: '服务调用次数',
-      dataIndex: 'callNo',
-      sorter: true,
-      hideInForm: true,
-      renderText: (val) => `${val}${'万'}`,
-    },
-    {
-      title: '状态',
-      dataIndex: 'status',
-      hideInForm: true,
-      valueEnum: {
-        0: {
-          text: '关闭',
-          status: 'Default',
-        },
-        1: {
-          text: '运行中',
-          status: 'Processing',
-        },
-        2: {
-          text: '已上线',
-          status: 'Success',
-        },
-        3: {
-          text: '异常',
-          status: 'Error',
-        },
-      },
-    },
-    {
-      title: '上次调度时间',
+      title: '上传时间',
       sorter: true,
       dataIndex: 'updatedAt',
       valueType: 'dateTime',
@@ -182,11 +141,14 @@ const TableList = () => {
             setCurrentRow(record);
           }}
         >
-          配置
+          分享
         </a>,
         <a key="subscribeAlert" href="https://procomponents.ant.design/">
-          订阅警报
+          删除
         </a>,
+         <a key="subscribeAlert" href="https://procomponents.ant.design/">
+         预览
+       </a>,
       ],
     },
   ];
@@ -207,7 +169,7 @@ const TableList = () => {
               handleModalVisible(true);
             }}
           >
-            <PlusOutlined /> 新建
+           <UploadOutlined /> 上传
           </Button>,
         ]}
         request={rule}
@@ -232,25 +194,27 @@ const TableList = () => {
               </a>{' '}
               项 &nbsp;&nbsp;
               <span>
-                服务调用次数总计 {selectedRowsState.reduce((pre, item) => pre + item.callNo, 0)} 万
+                
               </span>
             </div>
           }
         >
           <Button
+          
             onClick={async () => {
               await handleRemove(selectedRowsState);
               setSelectedRows([]);
               actionRef.current?.reloadAndRest?.();
             }}
+            danger
           >
             批量删除
           </Button>
-          <Button type="primary">批量审批</Button>
+          <Button type="primary">批量分享</Button>
         </FooterToolbar>
       )}
       <ModalForm
-        title={'新建规则'}
+        title={'上传本地点云文件'}
         width="400px"
         visible={createModalVisible}
         onVisibleChange={handleModalVisible}

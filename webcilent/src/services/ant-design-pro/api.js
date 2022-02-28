@@ -71,3 +71,52 @@ export async function removeRule(options) {
     ...(options || {}),
   });
 }
+
+/** 点云文件获取  */
+export async function fileManager(params,options) {
+  return request('/api/fileManager', {
+    method: 'GET',
+    params: { ...params },
+    ...(options || {}),
+  });
+}
+/** 点云文件上传  */
+export async function uploadFile(options) {
+  return request('/api/fileManager/upload', {
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+/** 点云文件删除  */
+export async function deleteFile(options) {
+  return request('/api/fileManager/delete', {
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+/** 获取分享 */
+
+export async function share(params,options) {
+  return request('/api/share', {
+    method: 'GET',
+    params: { ...params },
+    ...(options || {}),
+  });
+}
+
+/** 创建分享 */
+export async function addShare(options) {
+  return request('/api/share/add', {
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+/** 取消分享 */
+export async function deleteShare(options) {
+  return request('/api/share/delete', {
+    method: 'POST',
+    ...(options || {}),
+  });
+}
