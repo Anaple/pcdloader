@@ -1,9 +1,12 @@
 package com.ktserver.ktserver.sql.entity
 
 import com.baomidou.mybatisplus.annotation.TableField
+import com.baomidou.mybatisplus.annotation.TableId
+import com.baomidou.mybatisplus.annotation.TableName
 import lombok.Data
 
 @Data
+@TableName("file")
 class Files {
     @TableField(value = "file_id")
     var fileId:Int? = null
@@ -17,4 +20,12 @@ class Files {
     var fileName:String? = null
     @TableField(value = "device_id")
     var deviceId:String? = null
+
+    constructor()
+
+    constructor(userId: Int?, fileUrl: String?,  fileName: String?) {
+        this.userId = userId
+        this.fileUrl = fileUrl
+        this.fileName = fileName
+    }
 }

@@ -6,7 +6,9 @@ import ProTable from '@ant-design/pro-table';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import UpdateForm from './components/UpdateForm';
-import { fileManager,rule, addRule, updateRule, removeRule } from '@/services/ant-design-pro/api';
+import { Upload } from 'antd';
+import { InboxOutlined } from '@ant-design/icons';
+import { fileManager, rule, addRule, updateRule, removeRule } from '@/services/ant-design-pro/api';
 /**
  * @en-US Add node
  * @zh-CN 添加节点
@@ -77,6 +79,35 @@ const handleRemove = async (selectedRows) => {
   }
 };
 
+const { Dragger } = Upload;
+var storage=window.localStorage;
+const props = {
+  name: 'file',
+  multiple: true,
+  action: '/api/uploadFile',
+  method: 'POST',
+  headers:{
+    'X-XSRF-TOKEN': storage.getItem("token")
+  },
+
+
+  onChange(info) {
+    console.log(info)
+    const { status } = info.file;
+    if (status !== 'uploading') {
+      console.log(info.file, info.fileList);
+    }
+    if (status === 'done') {
+      message.success(`${info.file.name} file uploaded successfully.`);
+    } else if (status === 'error') {
+      message.error(`${info.file.name} file upload failed.`);
+    }
+  },
+  onDrop(e) {
+    console.log('Dropped files', e.dataTransfer.files);
+  },
+};
+
 const TableList = () => {
   /**
    * @en-US Pop-up window of new window
@@ -101,15 +132,15 @@ const TableList = () => {
   const columns = [
     {
       title: '文件名称',
-      dataIndex: 'name',
-      valueType:'textarea',
+      dataIndex: 'fileName',
+      valueType: 'textarea',
     },
     {
       title: '文件信息',
       dataIndex: 'desc',
       valueType: 'textarea',
     },
-    
+
     {
       title: '上传时间',
       sorter: true,
@@ -143,12 +174,12 @@ const TableList = () => {
         >
           分享
         </a>,
-        <a key="subscribeAlert" href="https://procomponents.ant.design/">
-          删除
+        <a key="subscribeAlert" href={record.fileUrl}>
+          下载
         </a>,
-         <a key="subscribeAlert" href="https://procomponents.ant.design/">
-         预览
-       </a>,
+        <a key="subscribeAlert" href={"/linkShare?link="+record.fileUrl}>
+          预览
+        </a>,
       ],
     },
   ];
@@ -169,7 +200,7 @@ const TableList = () => {
               handleModalVisible(true);
             }}
           >
-           <UploadOutlined /> 上传
+            <UploadOutlined /> 上传
           </Button>,
         ]}
         request={fileManager}
@@ -193,14 +224,11 @@ const TableList = () => {
                 {selectedRowsState.length}
               </a>{' '}
               项 &nbsp;&nbsp;
-              <span>
-                
-              </span>
+              <span></span>
             </div>
           }
         >
           <Button
-          
             onClick={async () => {
               await handleRemove(selectedRowsState);
               setSelectedRows([]);
@@ -218,29 +246,17 @@ const TableList = () => {
         width="400px"
         visible={createModalVisible}
         onVisibleChange={handleModalVisible}
-        onFinish={async (value) => {
-          const success = await handleAdd(value);
-
-          if (success) {
-            handleModalVisible(false);
-
-            if (actionRef.current) {
-              actionRef.current.reload();
-            }
-          }
-        }}
+        onFinish={()=>handleModalVisible(false)}
       >
-        <ProFormText
-          rules={[
-            {
-              required: true,
-              message: '规则名称为必填项',
-            },
-          ]}
-          width="md"
-          name="name"
-        />
-        <ProFormTextArea width="md" name="desc" />
+        <Dragger {...props}>
+          <p className="ant-upload-drag-icon">
+            <InboxOutlined />
+          </p>
+          <p className="ant-upload-text">拖拽或点击此区域以上传</p>
+          <p className="ant-upload-hint">
+            
+          </p>
+        </Dragger>
       </ModalForm>
       <UpdateForm
         onSubmit={async (value) => {

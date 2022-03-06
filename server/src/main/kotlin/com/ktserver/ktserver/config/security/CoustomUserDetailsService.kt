@@ -26,7 +26,6 @@ class CoustomUserDetailsService: UserDetailsService {
         val queryWrapperUserWish = KtQueryWrapper(UserTb()).eq(UserTb::username,username)
         val user: UserTb = userMapper!!.selectOne( queryWrapperUserWish)
         val authorities: MutableCollection<GrantedAuthority> = ArrayList()
-
         //这里应该动态的从数据库里读取该用户的权限然后进行添加
         authorities.add(SimpleGrantedAuthority("ROLE_USER"))
         if (user!=null){

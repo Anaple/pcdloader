@@ -7,6 +7,7 @@ export default [
       { component: './404' },
     ],
   },
+  { path: '/linkShare', layout: false, component: './SharePage' },
   { path: '/welcome', name: '欢迎', icon: 'smile', component: './Welcome' },
   // {
   //   path: '/admin',

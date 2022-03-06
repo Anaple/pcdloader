@@ -37,11 +37,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 
                 .antMatchers(HttpMethod.POST, "/api/login/account").permitAll() // 允许post请求，而无需认证
+                .antMatchers("/point_cloud/**").permitAll()
                 .antMatchers(HttpMethod.GET,"/api/currentUser").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/login/outLogin").permitAll()
                 .antMatchers("/api/table/**").authenticated()
-
-
                 .anyRequest().authenticated()// 所有请求都需要验证
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter() , UsernamePasswordAuthenticationFilter.class)

@@ -10,8 +10,6 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import java.util.*
-import java.util.Arrays.stream
-import java.util.stream.Collectors
 import javax.servlet.http.HttpServletRequest
 
 
@@ -112,16 +110,13 @@ object  JwtUtils {
      * 对请求的验证
      */
     fun getAuthentication(request: HttpServletRequest?): Authentication? {
-        val header = request?.headerNames
-        println(header)
         val token: String? =request?.getHeader(XSRF)
-        if (token != null) {
+        if (token != null && verify(token)) {
             val data: DecodedJWT = getTokenInfo(token)
             val claims: Map<String, Claim> = data.claims
-
             // 获取用户权限
             val authorities:  MutableCollection<GrantedAuthority> = ArrayList()
-            authorities.add(SimpleGrantedAuthority("ROLE_USER"))
+            authorities.add(SimpleGrantedAuthority(claims["authorities"]!!.asString()))
             val userName: String? = tokenGetName(token)
             if (userName != null) {
                 val usernamePasswordAuthenticationToken =
