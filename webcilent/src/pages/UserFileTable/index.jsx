@@ -80,19 +80,18 @@ const handleRemove = async (selectedRows) => {
 };
 
 const { Dragger } = Upload;
-var storage=window.localStorage;
+var storage = window.localStorage;
 const props = {
   name: 'file',
   multiple: true,
   action: '/api/uploadFile',
   method: 'POST',
-  headers:{
-    'X-XSRF-TOKEN': storage.getItem("token")
+  headers: {
+    'X-XSRF-TOKEN': storage.getItem('token'),
   },
 
-
   onChange(info) {
-    console.log(info)
+    console.log(info);
     const { status } = info.file;
     if (status !== 'uploading') {
       console.log(info.file, info.fileList);
@@ -165,19 +164,19 @@ const TableList = () => {
       dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => [
-        <a
-          key="config"
-          onClick={() => {
-            handleUpdateModalVisible(true);
-            setCurrentRow(record);
-          }}
-        >
-          分享
-        </a>,
+        // <a
+        //   key="config"
+        //   onClick={() => {
+        //     handleUpdateModalVisible(true);
+        //     setCurrentRow(record);
+        //   }}
+        // >
+        //   分享
+        // </a>,
         <a key="subscribeAlert" href={record.fileUrl}>
           下载
         </a>,
-        <a key="subscribeAlert" href={"/linkShare?link="+record.fileUrl}>
+        <a key="subscribeAlert" href={'/linkShare?link=' + record.fileUrl}>
           预览
         </a>,
       ],
@@ -189,9 +188,7 @@ const TableList = () => {
         headerTitle={'查询表格'}
         actionRef={actionRef}
         rowKey="key"
-        search={{
-          labelWidth: 120,
-        }}
+        search={false}
         toolBarRender={() => [
           <Button
             type="primary"
@@ -205,11 +202,7 @@ const TableList = () => {
         ]}
         request={fileManager}
         columns={columns}
-        rowSelection={{
-          onChange: (_, selectedRows) => {
-            setSelectedRows(selectedRows);
-          },
-        }}
+        rowSelection={false}
       />
       {selectedRowsState?.length > 0 && (
         <FooterToolbar
@@ -246,16 +239,14 @@ const TableList = () => {
         width="400px"
         visible={createModalVisible}
         onVisibleChange={handleModalVisible}
-        onFinish={()=>handleModalVisible(false)}
+        onFinish={() => handleModalVisible(false)}
       >
         <Dragger {...props}>
           <p className="ant-upload-drag-icon">
             <InboxOutlined />
           </p>
           <p className="ant-upload-text">拖拽或点击此区域以上传</p>
-          <p className="ant-upload-hint">
-            
-          </p>
+          <p className="ant-upload-hint"></p>
         </Dragger>
       </ModalForm>
       <UpdateForm

@@ -1,8 +1,7 @@
-package com.ktserver.ktserver.config
+package com.ktserver.ktserver.file
 
 import org.springframework.boot.system.ApplicationHome
 import org.springframework.context.annotation.Configuration
-import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
@@ -20,7 +19,7 @@ import java.util.*
 @Configuration
 @EnableWebMvc
 
-class AntdResourceController : WebMvcConfigurer {
+class FileResourceController : WebMvcConfigurer {
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
         registry.addResourceHandler("/**").addResourceLocations("classpath:dist/")
         var folder = "/"

@@ -8,7 +8,7 @@ export default [
     ],
   },
   { path: '/linkShare', layout: false, component: './SharePage' },
-  { path: '/welcome', name: '欢迎', icon: 'smile', component: './Welcome' },
+  // { path: '/welcome', name: '欢迎', icon: 'smile', component: './Welcome' },
   // {
   //   path: '/admin',
   //   name: '管理页',
@@ -21,9 +21,9 @@ export default [
   //   ],
   // },
   // { name: '查询表格', icon: 'table', path: '/list', component: './TableList' },
-  { name: '点云文件管理', icon:'FileImageOutlined', path: '/fileManager', component: './UserFileTable' },
-  { name: '设备管理', icon:'VideoCameraOutlined', path: '/deviceManager', component: './DeviceTable' },
-  { name: '分享管理',  icon:'ShareAltOutlined', path: '/shareManager', component: './ShareManager' },
-  { path: '/', redirect: '/welcome' },
+  { name: '点云文件管理', icon: 'FileImageOutlined', path: '/fileManager', component: './UserFileTable' },
+  // { name: '设备管理', icon:'VideoCameraOutlined', path: '/deviceManager', component: './DeviceTable' },
+  // { name: '分享管理',  icon:'ShareAltOutlined', path: '/shareManager', component: './ShareManager' },
+  { path: '/', redirect: '/fileManager' },
   { component: './404' },
 ];

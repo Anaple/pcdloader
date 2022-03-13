@@ -1,20 +1,20 @@
 # Thymeleaf Config
 spring:
-  thymeleaf:
-    prefix: classpath:dist/
+#  thymeleaf:
+#    prefix: classpath:dist/
 
 # DataSource MainConfig
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://39.105.181.51:3307/arcloud?
-    username: test1
-    password: passwdtest1
+    url: jdbc:mysql://a.gamehu4399.top:13306/arcloud?
+    username: testuser
+    password: testpassword
 #File
 
   servlet:
     multipart:
-      max-file-size: 150192100
-      max-request-size: 150192100
+      max-file-size: 1501921000
+      max-request-size: 1501921000
 
 # Logger MainConfig
 logging:

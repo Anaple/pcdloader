@@ -3,9 +3,9 @@
 /* eslint-disable */
 import { request } from 'umi';
 /** 获取当前的用户 GET /api/currentUser */
-var storage=window.localStorage;
+var storage = window.localStorage;
 export async function currentUser(options) {
- 
+
   return request('/api/currentUser', {
     method: 'GET',
     params: { token: storage.getItem("token") },
@@ -15,10 +15,10 @@ export async function currentUser(options) {
 /** 退出登录接口 POST /api/login/outLogin */
 
 export async function outLogin(options) {
-  storage["token"] = ""
+  storage["token"] = null
   return request('/api/login/outLogin', {
     method: 'POST',
-    
+
     ...(options || {}),
   });
 }
@@ -77,11 +77,11 @@ export async function removeRule(options) {
 }
 
 /** 点云文件获取  */
-export async function fileManager(params,options) {
+export async function fileManager(params, options) {
   return request('/api/fileManager', {
     method: 'GET',
     headers: {
-      'X-XSRF-TOKEN': storage.getItem("token") ,
+      'X-XSRF-TOKEN': storage.getItem("token"),
     },
     params: { ...params },
     ...(options || {}),
@@ -92,7 +92,7 @@ export async function uploadFile(options) {
   return request('/api/fileManager/upload', {
     method: 'POST',
     headers: {
-      'X-XSRF-TOKEN': storage.getItem("token") ,
+      'X-XSRF-TOKEN': storage.getItem("token"),
     },
     ...(options || {}),
   });
@@ -102,7 +102,7 @@ export async function deleteFile(options) {
   return request('/api/fileManager/delete', {
     method: 'POST',
     headers: {
-      'X-XSRF-TOKEN': storage.getItem("token") ,
+      'X-XSRF-TOKEN': storage.getItem("token"),
     },
     ...(options || {}),
   });
@@ -110,11 +110,11 @@ export async function deleteFile(options) {
 
 /** 获取分享 */
 
-export async function share(params,options) {
+export async function share(params, options) {
   return request('/api/share', {
     method: 'GET',
     headers: {
-      'X-XSRF-TOKEN': storage.getItem("token") ,
+      'X-XSRF-TOKEN': storage.getItem("token"),
     },
     params: { ...params },
     ...(options || {}),
@@ -126,7 +126,7 @@ export async function addShare(options) {
   return request('/api/share/add', {
     method: 'POST',
     headers: {
-      'X-XSRF-TOKEN': storage.getItem("token") ,
+      'X-XSRF-TOKEN': storage.getItem("token"),
     },
     ...(options || {}),
   });
@@ -137,7 +137,7 @@ export async function deleteShare(options) {
   return request('/api/share/delete', {
     method: 'POST',
     headers: {
-      'X-XSRF-TOKEN': storage.getItem("token") ,
+      'X-XSRF-TOKEN': storage.getItem("token"),
     },
     ...(options || {}),
   });
