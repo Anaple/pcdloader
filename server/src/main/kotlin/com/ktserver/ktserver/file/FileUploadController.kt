@@ -43,7 +43,7 @@ class FileUploadController {
                             } == true) {
                         break;
                     }else{
-                        fileName = "$fileName($num)";
+                        fileName = "($num) $fileName";
                         num++
                     }
                 }

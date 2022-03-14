@@ -30,4 +30,16 @@ class FileManagerService {
        return fileMapper!!.insert(files) >0
     }
 
+    fun queryFilePatch(fileId: Int):String?{
+        val queryWrapper = KtQueryWrapper(Files())
+                .eq(Files::fileId,fileId)
+        return  fileMapper!!.selectOne(queryWrapper).fileUrl;
+    }
+
+    fun detetedFile(fileId:Int):Boolean{
+        val queryWrapper = KtQueryWrapper(Files())
+                .eq(Files::fileId,fileId)
+         return fileMapper!!.delete(queryWrapper) > 0;
+    }
+
 }

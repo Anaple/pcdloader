@@ -110,7 +110,8 @@ export async function deleteFile(options) {
     headers: {
       'X-XSRF-TOKEN': storage.getItem("token"),
     },
-    ...(options || {}),
+    data: options
+
   });
 }
 
@@ -148,3 +149,4 @@ export async function deleteShare(options) {
     ...(options || {}),
   });
 }
+/**  */

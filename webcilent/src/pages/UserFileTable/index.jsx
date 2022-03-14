@@ -8,7 +8,14 @@ import ProDescriptions from '@ant-design/pro-descriptions';
 import UpdateForm from './components/UpdateForm';
 import { Upload } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
-import { fileManager, rule, addRule, updateRule, removeRule } from '@/services/ant-design-pro/api';
+import {
+  fileManager,
+  rule,
+  addRule,
+  updateRule,
+  removeRule,
+  deleteFile,
+} from '@/services/ant-design-pro/api';
 /**
  * @en-US Add node
  * @zh-CN 添加节点
@@ -66,8 +73,8 @@ const handleRemove = async (selectedRows) => {
   if (!selectedRows) return true;
 
   try {
-    await removeRule({
-      key: selectedRows.map((row) => row.key),
+    await deleteFile({
+      key: selectedRows.map((row) => row.fileId),
     });
     hide();
     message.success('Deleted successfully and will refresh soon');
@@ -183,6 +190,12 @@ const TableList = () => {
         >
           预览
         </a>,
+        <a
+          key="subscribeAlert"
+          onClick={() => (window.location.href = '/linkShare?link=' + record.fileUrl)}
+        >
+          删除
+        </a>,
       ],
     },
   ];
@@ -191,7 +204,7 @@ const TableList = () => {
       <ProTable
         headerTitle={'文件管理'}
         actionRef={actionRef}
-        rowKey="key"
+        rowKey="fileId"
         search={false}
         toolBarRender={() => [
           <Button
@@ -206,7 +219,11 @@ const TableList = () => {
         ]}
         request={fileManager}
         columns={columns}
-        rowSelection={false}
+        rowSelection={{
+          onChange: (_, selectedRows) => {
+            setSelectedRows(selectedRows);
+          },
+        }}
       />
       {selectedRowsState?.length > 0 && (
         <FooterToolbar
@@ -235,7 +252,6 @@ const TableList = () => {
           >
             批量删除
           </Button>
-          <Button type="primary">批量分享</Button>
         </FooterToolbar>
       )}
       <ModalForm
@@ -243,7 +259,10 @@ const TableList = () => {
         width="400px"
         visible={createModalVisible}
         onVisibleChange={handleModalVisible}
-        onFinish={() => handleModalVisible(false)}
+        onFinish={() => {
+          handleModalVisible(false);
+          actionRef.current?.reload();
+        }}
       >
         <Dragger {...props}>
           <p className="ant-upload-drag-icon">

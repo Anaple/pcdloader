@@ -31,4 +31,7 @@ class Files {
         this.fileUrl = fileUrl
         this.fileName = fileName
     }
+    constructor(fileId:Int){
+        this.fileId = fileId;
+    }
 }

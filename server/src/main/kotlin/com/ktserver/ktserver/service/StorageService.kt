@@ -37,4 +37,18 @@ class StorageService {
             false
         }
     }
+    fun deletedFile(filePath:String):Boolean{
+        //获取jar包的位置
+        val jar = ApplicationHome(javaClass)
+        val jarSource = jar.source
+        val path = jarSource.parentFile.toString()+filePath
+        val file = File(path)
+        if (file.isFile){
+            file.delete()
+            return true
+        }else{
+            return false
+        }
+
+    }
 }
