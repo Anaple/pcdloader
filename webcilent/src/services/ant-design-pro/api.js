@@ -4,8 +4,14 @@
 import { request } from 'umi';
 /** 获取当前的用户 GET /api/currentUser */
 var storage = window.localStorage;
+var promiseToken = new Promise((res, rej) => {
+  res
+})
 export async function currentUser(options) {
-
+  promiseToken.then(storage.getItem("token"))
+  return currentUserPM(options)
+}
+export async function currentUserPM(options) {
   return request('/api/currentUser', {
     method: 'GET',
     params: { token: storage.getItem("token") },

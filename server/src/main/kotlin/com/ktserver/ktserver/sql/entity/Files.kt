@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField
 import com.baomidou.mybatisplus.annotation.TableId
 import com.baomidou.mybatisplus.annotation.TableName
 import lombok.Data
+import java.sql.Timestamp
 
 @Data
 @TableName("file")
@@ -20,6 +21,8 @@ class Files {
     var fileName:String? = null
     @TableField(value = "device_id")
     var deviceId:String? = null
+    @TableField(value = "upload_time")
+    var uploadTime:Timestamp? = null
 
     constructor()
 

@@ -84,6 +84,7 @@ var storage = window.localStorage;
 const props = {
   name: 'file',
   multiple: true,
+  accept: '.pcd,.ply',
   action: '/api/uploadFile',
   method: 'POST',
   headers: {
@@ -143,7 +144,7 @@ const TableList = () => {
     {
       title: '上传时间',
       sorter: true,
-      dataIndex: 'updatedAt',
+      dataIndex: 'uploadTime',
       valueType: 'dateTime',
       renderFormItem: (item, { defaultRender, ...rest }, form) => {
         const status = form.getFieldValue('status');
@@ -176,7 +177,10 @@ const TableList = () => {
         <a key="subscribeAlert" href={record.fileUrl}>
           下载
         </a>,
-        <a key="subscribeAlert" href={'/linkShare?link=' + record.fileUrl}>
+        <a
+          key="subscribeAlert"
+          onClick={() => (window.location.href = '/linkShare?link=' + record.fileUrl)}
+        >
           预览
         </a>,
       ],
@@ -185,7 +189,7 @@ const TableList = () => {
   return (
     <PageContainer>
       <ProTable
-        headerTitle={'查询表格'}
+        headerTitle={'文件管理'}
         actionRef={actionRef}
         rowKey="key"
         search={false}

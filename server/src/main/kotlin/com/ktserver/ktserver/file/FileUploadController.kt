@@ -30,14 +30,26 @@ class FileUploadController {
     @PostMapping("api/uploadFile")
     @Throws
     fun fileUpload(@RequestParam("file") file:MultipartFile,request:HttpServletRequest): Boolean? {
-        val fileName = file.originalFilename
+        var fileName = file.originalFilename
         val userName = JwtUtils.tokenGetName(request.getHeader(JwtUtils.XSRF))
         val userId = JwtUtils.tokenGetUserId(request.getHeader(JwtUtils.XSRF))
         if (fileName != null) {
             if (userName != null) {
-               val storeAdd = storageService!!.uploadFile(fileName,file,userName)
+                var num = 1
+                while (true) {
+                    if (fileName?.let {
+                                fileManagerService!!.queryFileNameIsUsed(it
+                                )
+                            } == true) {
+                        break;
+                    }else{
+                        fileName = "$fileName($num)";
+                        num++
+                    }
+                }
+               val storeAdd = fileName?.let { storageService!!.uploadFile(it,file,userName) }
                val fileSqlAdd = fileManagerService!!.addUserFiles(Files(userId=userId,fileUrl = "/point_cloud/$userName/$fileName",fileName = fileName))
-                if (storeAdd&&fileSqlAdd){
+                if (storeAdd == true &&fileSqlAdd){
                     return true;
                 }
             }else{

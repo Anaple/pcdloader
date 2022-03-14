@@ -19,6 +19,12 @@ class FileManagerService {
         val dataArr = fileMapper!!.selectPage(Page(current.toLong(),pageSize.toLong()),queryWrapper)
         return JsonTableDeafultBack(dataArr.records,dataArr.total.toInt(),true)
     }
+    fun queryFileNameIsUsed(fileName:String):Boolean{
+        val queryWapper = KtQueryWrapper(Files()).eq(Files::fileName,fileName)
+        val isUsed = fileMapper?.selectList(queryWapper)!!.size == 0;
+        return  isUsed
+
+    }
 
     fun addUserFiles(files: Files):Boolean{
        return fileMapper!!.insert(files) >0

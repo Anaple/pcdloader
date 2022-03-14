@@ -1,7 +1,5 @@
-# Thymeleaf Config
+
 spring:
-#  thymeleaf:
-#    prefix: classpath:dist/
 
 # DataSource MainConfig
   datasource:

@@ -37,8 +37,7 @@ export default function () {
 获取当前分辨率动态调整卡片展示
  */
   const sysCard = () => {
-    console.log(cardShow);
-    if (cardShow) {
+    if (!cardShow) {
       return (
         <Card
           title="状态"
@@ -63,11 +62,7 @@ export default function () {
     } else {
       return (
         <>
-          <Button
-            className={styles.btn}
-            size="large"
-            onClick={() => (window.location.href = '/welcome')}
-          >
+          <Button className={styles.btn} size="large" onClick={() => (window.location.href = '/')}>
             {' '}
             返回首页{' '}
           </Button>
